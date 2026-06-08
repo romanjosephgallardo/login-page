@@ -6,7 +6,7 @@ require_once 'config.php'; // Include the database connection
 if (isset($_POST['register'])) { // Check if the registration form is submitted or not
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = password_hash($_POST[''], PASSWORD_DEFAULT);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
 
     // Check if the email is already registered or not
@@ -30,7 +30,7 @@ if (isset($_POST['login'])) { // Check if the login form is submitted or not
     $result = $conn->query("SELECT * FROM users WHERE email='$email'");
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
-        
+
         // Verify the password
         if (password_verify($password, $user['password'])) {
             $_SESSION['name'] = $user['name'];

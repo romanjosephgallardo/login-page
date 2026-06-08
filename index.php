@@ -12,11 +12,11 @@ $activeForm = $_SESSION['active_form'] ?? 'login'; // Default to login form if n
 session_unset(); // Clear session messages and active form state after use
 
 function showError($error) { 
-    return !empty($error) ? "<p class='error'>$error</p>" : "";
+    return !empty($error) ? "<p class='error-message'>$error</p>" : "";
 }
 
-function isActive($form) {
-    return $activeForm === $activeform ? 'active' : '';
+function isActiveForm($formName, $activeForm) {
+    return $formName === $activeForm ? 'active' : '';
 }
 
 ?>
@@ -32,20 +32,22 @@ function isActive($form) {
 </head>
 
 <body>
-    <div class="container"></div>
-        <div class="form-box active" id="login-form">
+    <div class="container">
+        <div class="form-box <?= isActiveForm('login', $activeForm); ?>" id="login-form">
             <form action="login_register.php" method="post">
                 <h2>Login</h2>
-                    <input type="text" name="Email" placeholder="Email" required>
+                <?php  showError($errors['login']); ?>
+                    <input type="text" name="email" placeholder="Email" required>
                     <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Login</button>
+                <button type="submit" name="login">Login</button>
                 <p class="message">Don't have an account? <a href="#" onclick="showForm('register-form')">Register</a></p>
             </form>
         </div>
         
-        <div class="form-box" id="register-form">
+        <div class="form-box <?= isActiveForm('register', $activeForm); ?>" id="register-form">
             <form action="login_register.php" method="post">
                 <h2>Register</h2>
+                <?php  showError($errors['register']); ?>
                 <input type="text" name="name" placeholder="Name" required>
                 <input type="text" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
@@ -54,7 +56,7 @@ function isActive($form) {
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
                 </select>
-                <button type="submit" name=""register">Register</button>
+                <button type="submit" name="register">Register</button>
                 <p>Already have an account? <a href="#" onclick="showForm('login-form')"> Login </a></p>
             
             </form>
