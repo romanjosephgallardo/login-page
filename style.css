@@ -103,10 +103,10 @@ p a:hover {
 
 .error-message {
     padding: 12px;
-    background: var(--tan);
+    background: red;
     border-radius: 6px;
     font-size: 14px;
-    color: red;
+    color: var(--white);
     text-align: center;
     margin-bottom: 20px;
 }
